@@ -3,6 +3,12 @@ import os
 import sys 
 import requests 
 from datetime import datetime
+import ssl
+import socket
+from urllib.parse import urlparse
+from datetime import timezone
+
+
 
 nom_fichier = 'list_serveur.json'
 log_fichier ='check_log.txt'
@@ -27,21 +33,73 @@ def afficher_sites():
             webhook = site.get('webhook', 'aucun')
             print(f"{i} : {site['nom']} ({site['url']}) - Webhook : {webhook}")
 
+def envoyer_webhook(url, message):
+    try:
+        requests.post(url, json={"content": message})
+    except Exception as e:
+        print(f"Erreur envoi webhook : {e}")
+
+def verifier_certificat_ssl(url):
+    try :
+        parsed = urlparse(url)
+        if parsed.scheme != 'https' :
+            return None 
+        
+        host = parsed.hostname
+        port = parsed.port or 443
+
+        context = ssl.create_default_context()
+        with socket.create_connection((host, port), timeout=5) as sock:
+            with context.wrap_socket(sock, server_hostname=host) as ssock:
+                cert = ssock.getpeercert()
+                expire_str = cert['notAfter']
+                expire_date = datetime.strptime(expire_str, '%b %d %H:%M:%S %Y %Z').replace(tzinfo=timezone.utc)
+                jours_restant = (expire_date - datetime.now(timezone.utc)).days
+                return jours_restant
+    except Exception as e:
+        return f"Erreur certificat : {e}"
+
+etat_sites = {}
+
 def verifier_sites():
     with open(log_fichier, 'a', encoding='utf-8') as log:
         for site in sites:
             url = site['url']
+            nom = site['nom']
+            webhook = site.get('webhook')
             now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
             try:
                 response = requests.get(url, timeout=5)
                 code = response.status_code
                 statut = "UP" if 200 <= code < 400 else "DOWN"
-                log.write(f"[{now}] {url} - HTTP {code} - {statut}\n")
-                print(f"{url} - HTTP {code} - {statut}")
-            except requests.RequestException as e:
-                log.write(f"[{now}] {url} - ERROR - DOWN ({e})\n")
-                print(f"{url} - ERROR - DOWN ({e})")
-                
+            except requests.RequestException:
+                code = 'ERROR'
+                statut = "DOWN"
+            
+            jours_certificat = verifier_certificat_ssl(url)
+
+            if isinstance(jours_certificat, int):
+                cert_info = f" - SSL expire dans {jours_certificat} jours"
+                if jours_certificat <= 15:
+                    cert_info += " -  Attention, expiration proche"
+            else:
+                cert_info = f" - {jours_certificat}" if jours_certificat else ""
+
+
+            print(f"{nom} ({url}) - HTTP {code} - {statut}{cert_info}")
+            log.write(f"[{now}] {nom} ({url}) - HTTP {code} - {statut}{cert_info}\n")
+
+
+            precedent = etat_sites.get(url)
+            if webhook and precedent != statut:
+                if statut == "DOWN":
+                    envoyer_webhook(webhook, f" **{nom}** est DOWN  (HTTP {code})")
+                elif statut == "UP":
+                    envoyer_webhook(webhook, f" **{nom}** est revenu UP  (HTTP {code})")
+            etat_sites[url] = statut
+
+
 if len(sys.argv) > 1 and sys.argv[1] == 'check':
     if not sites:
         print("Aucun site à vérifier.")

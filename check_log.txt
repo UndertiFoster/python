@@ -3,3 +3,29 @@
 [2025-06-25 09:52:21] https://www.facebook.com/ - HTTP 200 - UP
 [2025-06-25 09:52:21] https://www.epid-vauban.fr/ - HTTP 200 - UP
 [2025-06-25 09:52:21] https://www.it-mind.fr/ - HTTP 200 - UP
+[2025-06-25 10:20:30] Oriatec (https://oriatec.fr/) - HTTP 200 - UP
+[2025-06-25 10:21:05] Oriatec (https://oriatec.fr/) - HTTP 200 - UP
+[2025-06-25 10:21:06] Google (https://www.google.com/) - HTTP 200 - UP
+[2025-06-25 10:21:06] Facebook (https://www.facebook.com/) - HTTP 200 - UP
+[2025-06-25 10:21:06] EPID (https://www.epid-vauban.fr/) - HTTP 200 - UP
+[2025-06-25 10:21:06] IT-MIND (https://www.it-mind.fr/) - HTTP 200 - UP
+[2025-06-25 10:38:31] Oriatec (https://oriatec.fr/) - HTTP 200 - UP
+[2025-06-25 10:38:32] Google (https://www.google.com/) - HTTP 200 - UP
+[2025-06-25 10:38:32] Facebook (https://www.facebook.com/) - HTTP 200 - UP
+[2025-06-25 10:38:32] EPID (https://www.epid-vauban.fr/) - HTTP 200 - UP
+[2025-06-25 10:38:32] IT-MIND (https://www.it-mind.fr/) - HTTP 200 - UP
+[2025-06-25 10:39:56] Oriatec (https://oriatec.fr/) - HTTP 200 - UP
+[2025-06-25 10:39:57] Google (https://www.google.com/) - HTTP 200 - UP
+[2025-06-25 10:39:57] Facebook (https://www.facebook.com/) - HTTP 200 - UP
+[2025-06-25 10:39:57] EPID (https://www.epid-vauban.fr/) - HTTP 200 - UP
+[2025-06-25 10:39:57] IT-MIND (https://www.it-mind.fr/) - HTTP 200 - UP
+[2025-06-25 10:41:00] Oriatec (https://oriatec.fr/) - HTTP 200 - UP - Erreur certificat : can't subtract offset-naive and offset-aware datetimes
+[2025-06-25 10:41:01] Google (https://www.google.com/) - HTTP 200 - UP - Erreur certificat : can't subtract offset-naive and offset-aware datetimes
+[2025-06-25 10:41:01] Facebook (https://www.facebook.com/) - HTTP 200 - UP - Erreur certificat : can't subtract offset-naive and offset-aware datetimes
+[2025-06-25 10:41:01] EPID (https://www.epid-vauban.fr/) - HTTP 200 - UP - Erreur certificat : can't subtract offset-naive and offset-aware datetimes
+[2025-06-25 10:41:01] IT-MIND (https://www.it-mind.fr/) - HTTP 200 - UP - Erreur certificat : can't subtract offset-naive and offset-aware datetimes
+[2025-06-25 10:41:52] Oriatec (https://oriatec.fr/) - HTTP 200 - UP - SSL expire dans 54 jours
+[2025-06-25 10:41:53] Google (https://www.google.com/) - HTTP 200 - UP - SSL expire dans 60 jours
+[2025-06-25 10:41:53] Facebook (https://www.facebook.com/) - HTTP 200 - UP - SSL expire dans 7 jours -  Attention, expiration proche
+[2025-06-25 10:41:53] EPID (https://www.epid-vauban.fr/) - HTTP 200 - UP - SSL expire dans 38 jours
+[2025-06-25 10:41:53] IT-MIND (https://www.it-mind.fr/) - HTTP 200 - UP - SSL expire dans 46 jours
