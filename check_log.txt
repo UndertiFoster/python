@@ -1,0 +1,5 @@
+[2025-06-25 09:52:19] https://oriatec.fr/ - HTTP 200 - UP
+[2025-06-25 09:52:21] https://www.google.com/ - HTTP 200 - UP
+[2025-06-25 09:52:21] https://www.facebook.com/ - HTTP 200 - UP
+[2025-06-25 09:52:21] https://www.epid-vauban.fr/ - HTTP 200 - UP
+[2025-06-25 09:52:21] https://www.it-mind.fr/ - HTTP 200 - UP

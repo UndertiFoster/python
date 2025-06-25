@@ -1,0 +1,23 @@
+[
+    {
+        "nom": "Oriatec",
+        "url": "https://oriatec.fr/",
+        "webhook": "https://discord.com/api/webhooks/1367058652636119142/RSOsYcUHZNKfW9UF1oJTa0JETiYf1BOwV-S_mlmlvwGxDD30Mfq-MA5FRJw4JPaAOH23"
+    },
+    {
+        "nom": "Google",
+        "url": "https://www.google.com/"
+    },
+    {
+        "nom": "Facebook",
+        "url": "https://www.facebook.com/"
+    },
+    {
+        "nom": "EPID",
+        "url": "https://www.epid-vauban.fr/"
+    },
+    {
+        "nom": "IT-MIND",
+        "url": "https://www.it-mind.fr/"
+    }
+]
