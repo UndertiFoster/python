@@ -29,3 +29,8 @@
 [2025-06-25 10:41:53] Facebook (https://www.facebook.com/) - HTTP 200 - UP - SSL expire dans 7 jours -  Attention, expiration proche
 [2025-06-25 10:41:53] EPID (https://www.epid-vauban.fr/) - HTTP 200 - UP - SSL expire dans 38 jours
 [2025-06-25 10:41:53] IT-MIND (https://www.it-mind.fr/) - HTTP 200 - UP - SSL expire dans 46 jours
+[2025-06-25 10:57:09] Oriatec (https://oriatec.fr/) - HTTP 200 - UP - SSL expire dans 54 jours
+[2025-06-25 10:57:09] Google (https://www.google.com/) - HTTP 200 - UP - SSL expire dans 60 jours
+[2025-06-25 10:57:09] Facebook (https://www.facebook.com/) - HTTP 200 - UP - SSL expire dans 7 jours -  Attention, expiration proche
+[2025-06-25 10:57:10] EPID (https://www.epid-vauban.fr/) - HTTP 200 - UP - SSL expire dans 38 jours
+[2025-06-25 10:57:10] IT-MIND (https://www.it-mind.fr/) - HTTP 200 - UP - SSL expire dans 46 jours

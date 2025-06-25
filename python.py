@@ -7,7 +7,9 @@ import ssl
 import socket
 from urllib.parse import urlparse
 from datetime import timezone
-
+import csv
+import html 
+from typing import List
 
 
 nom_fichier = 'list_serveur.json'
@@ -61,6 +63,68 @@ def verifier_certificat_ssl(url):
 
 etat_sites = {}
 
+import csv
+import html
+from typing import List
+
+def exporter_historique(noms_sites: List[str], format_export: str = 'csv') -> None:
+    """
+    Exporte l'historique des vérifications pour un ou plusieurs sites sélectionnés.
+
+    Args:
+        noms_sites (List[str]): Liste des noms des sites à exporter.
+        format_export (str): 'csv' ou 'html'.
+
+    Returns:
+        None
+    """
+    if not os.path.exists(log_fichier):
+        print("Fichier de log introuvable.")
+        return
+
+    lignes_trouvees = []
+    try:
+        with open(log_fichier, 'r', encoding='utf-8') as f:
+            for ligne in f:
+                for nom in noms_sites:
+                    if f"] {nom} (" in ligne:
+                        try:
+                            horodatage, reste = ligne.split("] ", 1)
+                            horodatage = horodatage.strip("[]")
+                            lignes_trouvees.append((horodatage, nom, reste.strip()))
+                        except ValueError:
+                            continue
+    except Exception as e:
+        print(f"Erreur de lecture du fichier : {e}")
+        return
+
+    if not lignes_trouvees:
+        print("Aucune donnée trouvée pour les sites sélectionnés.")
+        return
+
+    fichier_export = f"historique_export.{format_export}"
+    try:
+        if format_export == 'csv':
+            with open(fichier_export, 'w', newline='', encoding='utf-8') as f_csv:
+                writer = csv.writer(f_csv)
+                writer.writerow(['Horodatage', 'Nom du Site', 'Détails'])
+                writer.writerows(lignes_trouvees)
+            print(f"Export CSV effectué : {fichier_export}")
+        elif format_export == 'html':
+            with open(fichier_export, 'w', encoding='utf-8') as f_html:
+                f_html.write("<html><head><meta charset='utf-8'><title>Historique</title></head><body>\n")
+                f_html.write("<h2>Historique des vérifications</h2>\n")
+                f_html.write("<table border='1'><tr><th>Horodatage</th><th>Nom du Site</th><th>Détails</th></tr>\n")
+                for date, nom, details in lignes_trouvees:
+                    f_html.write(f"<tr><td>{html.escape(date)}</td><td>{html.escape(nom)}</td><td>{html.escape(details)}</td></tr>\n")
+                f_html.write("</table></body></html>")
+            print(f"Export HTML effectué : {fichier_export}")
+        else:
+            print("Format non pris en charge. Utilisez 'csv' ou 'html'.")
+    except Exception as e:
+        print(f"Erreur lors de l'écriture du fichier : {e}")
+
+
 def verifier_sites():
     with open(log_fichier, 'a', encoding='utf-8') as log:
         for site in sites:
@@ -100,7 +164,42 @@ def verifier_sites():
             etat_sites[url] = statut
 
 
-if len(sys.argv) > 1 and sys.argv[1] == 'check':
+if len(sys.argv) > 1:
+    if sys.argv[1] == 'check':
+        if not sites:
+            print("Aucun site à vérifier.")
+        else:
+            print("Vérification des sites...")
+            verifier_sites()
+        sys.exit()
+
+    elif sys.argv[1] == 'export':
+        if not sites:
+            print("Aucun site enregistré.")
+            sys.exit()
+
+        afficher_sites()
+        choix = input("Entrez les numéros des sites à exporter (ex: 0,1,2) ou 'all' pour tout exporter : ").strip()
+
+        if choix.lower() == 'all':
+            noms_sites = [site['nom'] for site in sites]
+        else:
+            try:
+                indices = [int(i.strip()) for i in choix.split(',')]
+                noms_sites = [sites[i]['nom'] for i in indices if 0 <= i < len(sites)]
+            except ValueError:
+                print("Entrée invalide. Veuillez entrer des numéros séparés par des virgules.")
+                sys.exit()
+
+        format_export = input("Format d'export (csv/html) : ").strip().lower()
+        if format_export not in ['csv', 'html']:
+            print("Format non pris en charge.")
+            sys.exit()
+
+        exporter_historique(noms_sites, format_export)
+        sys.exit()
+
+
     if not sites:
         print("Aucun site à vérifier.")
     else:
